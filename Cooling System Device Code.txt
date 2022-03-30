@@ -1,11 +1,12 @@
+//Pins used
 int red = 4;
 int yellow = 5;
 int green = 6;
 int buzzer = 7;
 int temp = A0;
 int motor = 3;
-int speed = 255;
 
+//Functions used
 void greenOn(){
   digitalWrite(green, HIGH);
 }
@@ -56,7 +57,8 @@ void setup() {
 }
 
 void loop(){
-
+  
+  //converts voltage into temperature
   int reading = analogRead(temp);
   
   float voltage = reading * 5.0;
@@ -66,6 +68,8 @@ void loop(){
   Serial.print(temperatureC); Serial.println(" degrees C");
   delay(1000);
   
+  /*Temperature too high, turns red LED light, buzzer, and fan on
+  while the rest is off*/ 
   if(temperatureC > 37){
     redOn();
     greenOff();
@@ -74,6 +78,8 @@ void loop(){
     fanOn();
   }
   
+  /*Temperature just right, turns green LED light on
+  while the rest is off*/
   else if(temperatureC >= 27 && temperatureC <= 37){
     redOff();
     greenOn();
@@ -82,6 +88,8 @@ void loop(){
     fanOff();
   }
   
+  /*Temperature too cold, turns yellow LED light, and buzzer on
+  while the rest is off*/
   else {
     redOff();
     greenOff();
